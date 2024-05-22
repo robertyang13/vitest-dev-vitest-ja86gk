@@ -22,6 +22,18 @@ describe('the first set of basic timer tests', () => {
     expect(component).toBeDefined();
   });
 
+  it('throws an error if both minutes and seconds are 0', () => {
+    expect(() => {
+      render(<Timer minutes={0} seconds={0} onEnd={() => {}} />);
+    }).toThrow('Timer cannot have both minutes and seconds set to 0');
+  });
+
+  it('throws an error if both minutes and seconds are negative', () => {
+    expect(() => {
+      render(<Timer minutes={-1} seconds={-1} onEnd={() => {}} />);
+    }).toThrow('Timer cannot have both minutes and seconds set to negative values');
+  });
+
   it('displays the initial time correctly', () => {
     render(<Timer minutes={1} seconds={30} onEnd={() => {}} />);
     expect(screen.getByText('01:30')).toBeInTheDocument();

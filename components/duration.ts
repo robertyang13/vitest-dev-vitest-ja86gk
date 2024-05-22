@@ -12,7 +12,8 @@ export function formatDuration(seconds: number): string {
   const formattedMinutes = minutes.toString().padStart(2, '0');
   const formattedSeconds = remainingSecondsFinal.toString().padStart(2, '0');
 
-  return `${formattedDays}:${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+  // return `${formattedDays}:${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+  return `${formattedMinutes}:${formattedSeconds}`
 }
 
 // Example usage:

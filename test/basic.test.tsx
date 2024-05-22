@@ -8,12 +8,39 @@ potential tests:
 1. a <Timer/> component is created
 2. ...
 */
-// input is in minute and seconds
-// if the function call executes properly
-
 describe('the first set of basic timer tests', () => {
   it('A Timer Component is created', () => {
-    const component = render(<Timer />);
+    const component = render(<Timer second={10} callbackFunction={() => {}} />);
     expect(component).toBeDefined();
+    screen.debug();
+  });
+});
+
+describe('purchasing flow', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('displays time correctly', () => {
+    // set hour within business hours
+    render(<Timer second={10} callbackFunction={() => {}} />);
+    expect(screen.getByText('Timer: 00:00:00:10')).toBeInTheDocument();
+  });
+  it('decrements seconds correctly', async () => {
+    render(<Timer second={10} callbackFunction={() => {}} />);
+    vi.advanceTimersByTime(1000);
+
+    expect(screen.getByText('Timer: 00:00:00:09')).toBeInTheDocument();
+  });
+  it('changes from minutes to seconds correctly', async () => {
+    render(<Timer second={60} callbackFunction={() => {}} />);
+    expect(screen.getByText('Timer: 00:00:01:00')).toBeInTheDocument();
+    vi.advanceTimersByTime(1000);
+
+    expect(screen.getByText('Timer: 00:00:00:59')).toBeInTheDocument();
   });
 });
